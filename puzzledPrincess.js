@@ -11,7 +11,25 @@ class Marker extends Sprite {
         this.y = 275;
     }
 }
-class PrincessMarker extends Marker {}
+class PrincessMarker extends Marker {
+    constructor(board) {
+        super(board, "annFace.png", "princess Ann");
+        this.dragging = false;
+    }
+    handleMouseLeftButtonDown() {
+        this.dragging = true;
+    }
+    handleMouseLeftButtonUp() {
+        this.dragging = false;
+    }
+    handleGameLoop() {
+        if (this.dragging) {
+            this.x = game.getMouseX() - this.width / 2;
+            this.y = game.getMouseX() - this.height / 2;
+        }
+    }
+}
+
 class StrangerMarker extends Marker {}
 
 class TicTacToe extends Sprite {
@@ -25,6 +43,10 @@ class TicTacToe extends Sprite {
         this.size = 3;
         this.activeMarker; // variable exists, but value is undefined
         this.activeMarker = new PrincessMarker(this);
+    }
+    takeTurns() {
+        this.activeMarker = new PrincessMarker(this);
+
     }
 }
 let theBoard = new TicTacToe();
