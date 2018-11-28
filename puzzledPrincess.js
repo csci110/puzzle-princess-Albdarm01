@@ -9,8 +9,14 @@ class Marker extends Sprite {
         this.setImage(image);
         this.x = this.startX = 150;
         this.y = this.startY = 275;
+        this.squareSymbol = this.name.substring(0, 1);
+    }
+    playInSquare(row, col) {
+        this.x = this.board.x + col * 150 + 50;
+        this.y = this.board.y + row * 150 + 50;
     }
 }
+
 class PrincessMarker extends Marker {
     constructor(board) {
         super(board, "annFace.png", "princess Ann");
@@ -18,21 +24,25 @@ class PrincessMarker extends Marker {
     }
     handleMouseLeftButtonDown() {
         this.dragging = true;
+
     }
     handleMouseLeftButtonUp() {
         this.dragging = false;
+
         let row = Math.floor((this.y - this.board.y) / 150);
         //window.alert(row);
-        if (col < 0 || col > 2) {
+        if (row < 0 || row > 2) {
             this.y = this.startY;
             return;
         }
-            let col = Math.floor((this.x - this.board.x) / 150);
+        let col = Math.floor((this.x - this.board.x) / 150);
         //window.alert(col);
-        if (row < 0 || row > 2) {
+        if (col < 0 || col > 2) {
             this.x = this.startX;
             return;
         }
+        this.playInSquare(row, col);
+        this.board = theBoard.takeTurns();
     }
     handleGameLoop() {
         if (this.dragging) {
@@ -54,8 +64,27 @@ class TicTacToe extends Sprite {
         this.SquareSize = 150;
         this.size = 3;
         this.activeMarker; // variable exists, but value is undefined
+        this.emptySquareSymbol = '-';
         this.activeMarker = new PrincessMarker(this);
+        this.dataModel = [];
+        for (let row = 0; row < this.size; row = row + 1) {
+            this.dataModel[row] = [];
+            for (let col = 0; col < this.size; col = col + 1) {
+                this.dataModel[row][col] = this.emptySquareSymbol;
+            }
+        }
     }
+    debugBoard() {
+        let boardString = '\n';
+        for (let row = 0; row < this.size; row = row + 1) {
+            for (let col = 0; col < this.size; col = col + 1) {
+                boardString = boardString + this.dataModel[row][col] + ' ';
+            }
+            boardString = boardString + '\n';
+        }
+        console.log('The current state of the board is ' + boardString);
+    }
+
     takeTurns() {
         this.activeMarker = new PrincessMarker(this);
 
