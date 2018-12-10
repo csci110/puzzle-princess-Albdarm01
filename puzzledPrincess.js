@@ -262,7 +262,7 @@ class StrangerMarker extends Marker {
                         princessRow++) {
                 for (let princessCol = 0; princessCol < this.board.boardSize;
                             princessCol = princessCol + 1) {
-                                // Mark the square tentatively for opponent ...
+                        // Mark the square tentatively for opponent ...
                  if (this.board.markSquare(princessRow, princessCol, true)) {
                           // if this is the block, and it creates no fork ...
      if (this.board.findWinningMove() ==
@@ -343,7 +343,7 @@ class TicTacToe extends Sprite {
             let markerCount = 0;
 
             for (let col = 0; col < this.size; col = col + 1) {
-       // ADD CODE HERE THAT COUNTS EMPTY SQUARES AND MARKER SQUARES IN THE ROW
+      // ADD CODE HERE THAT COUNTS EMPTY SQUARES AND MARKER SQUARES IN THE ROW
             }
 
             if (emptyCount === 1 && markerCount === 2) {
